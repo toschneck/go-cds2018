@@ -1,10 +1,19 @@
 package main
 
-import "net/http"
+import (
+	"net/http"
+	"log"
+	"github.com/gorilla/mux"
+)
 
 func main() {
-	http.HandleFunc("/", rootHandler())
-	http.ListenAndServe(":8080", nil)
+	log.Printf("Booting ...")
+
+	r := mux.NewRouter()
+	r.HandleFunc("/home", rootHandler())
+
+
+	log.Fatal(http.ListenAndServe(":8080", r));
 }
 
 func rootHandler() func(http.ResponseWriter, *http.Request) {
